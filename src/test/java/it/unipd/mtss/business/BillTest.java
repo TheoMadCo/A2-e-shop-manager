@@ -179,7 +179,20 @@ public class BillTest {
     //Assert
             assertEquals("Ci sono più di 30 items nella lista itemsOrdered!", e.getMessage());
         }
-    } 
+    }
+
+    @Test
+    public void testUnder10Euro() throws BillException {
+    //Arrange
+        BillImpl newBill = new BillImpl();
+        User user = new User("Matteo", "Oron", LocalDate.of(2009, 9, 2), "mn@gmail.com");
+        List<EItem> itemsOrdered = new ArrayList<EItem>();
+        itemsOrdered.add(new EItem(EItem.item.Keyboard, "myfirstmouse", 5));
+    //Act
+        double result = newBill.getOrderPrice(itemsOrdered, user, LocalTime.of(12, 30));
+    //Assert 5 + 2 = 7
+        assertEquals(7, result, 0.0);
+    }
         
 }
     
