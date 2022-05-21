@@ -1,0 +1,39 @@
+////////////////////////////////////////////////////////////////////
+// [Matteo] [Noro] [1229145]
+// [Giovanni] [Cocco] [1223856]
+////////////////////////////////////////////////////////////////////
+
+package it.unipd.mtss.business;
+
+import java.time.LocalTime;
+import java.util.List;
+
+import it.unipd.mtss.model.User;
+import it.unipd.mtss.model.EItem;
+import it.unipd.mtss.business.exception.BillException;
+
+public class BillImpl implements Bill{
+
+
+    public double getOrderPrice(List<EItem> itemsOrdered, User user, LocalTime orderTime) 
+            throws BillException{
+        double total = 0.0D;
+        
+        if(itemsOrdered == null) {
+            throw new BillException("La lista itemsOrdered è uguale a null");
+        }
+        if(itemsOrdered.contains(null)) {
+            throw new BillException("La lista itemsOrdered contiene un item uguale a null");
+        }
+        if(user == null) {
+            throw new BillException("utente è uguale a null");
+        }
+        
+        
+        for(EItem item: itemsOrdered) {
+            total = total + item.getItemPrice();
+        }
+        
+        return total;
+    }
+}
