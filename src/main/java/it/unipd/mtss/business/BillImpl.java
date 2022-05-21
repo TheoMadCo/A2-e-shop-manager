@@ -66,6 +66,9 @@ public class BillImpl implements Bill {
         if(countKeyboard == countMouse) {
             total = total - (cheapestTastiera < cheapestMouse ? cheapestTastiera : cheapestMouse);
         }
+        if (total > 1000 ) {
+            total = total - (total * 0.1);
+        }
 
         return total;
     }
