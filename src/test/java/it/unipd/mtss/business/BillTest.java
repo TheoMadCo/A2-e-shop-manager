@@ -162,6 +162,24 @@ public class BillTest {
         assertEquals(1219.5, result, 0.0);
 
     }
+
+    @Test
+    public void testMoreThan30Items() throws BillException {
+    //Arrange
+        BillImpl newBill = new BillImpl();
+        User user = new User("Matteo", "Oron", LocalDate.of(2009, 9, 2), "mn@gmail.com");
+        List<EItem> itemsOrdered = new ArrayList<EItem>();
+        for(int i = 0; i < 31; i++) {
+            itemsOrdered.add(new EItem(EItem.item.Keyboard, "uncommonKeyboard", i));
+        }
+    //Act
+        try {
+            newBill.getOrderPrice(itemsOrdered, user, LocalTime.of(12, 30));
+        }catch(BillException e) {
+    //Assert
+            assertEquals("Ci sono più di 30 items nella lista itemsOrdered!", e.getMessage());
+        }
+    } 
         
 }
     

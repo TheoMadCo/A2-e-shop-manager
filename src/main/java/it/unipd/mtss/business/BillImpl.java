@@ -33,6 +33,9 @@ public class BillImpl implements Bill {
         if (user == null) {
             throw new BillException("utente è uguale a null");
         }
+        if(itemsOrdered.size() > 30) {
+            throw new BillException("Ci sono più di 30 items nella lista itemsOrdered!");
+        }
 
         for (EItem item : itemsOrdered) {
             if (item.getItemType() == EItem.item.Mouse) {
