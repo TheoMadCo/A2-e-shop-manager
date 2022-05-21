@@ -18,7 +18,9 @@ public class BillImpl implements Bill{
     public double getOrderPrice(List<EItem> itemsOrdered, User user, LocalTime orderTime) 
             throws BillException{
         double total = 0.0D;
+        int countMouse = 0;
         int countProcessori = 0;
+        double cheapestMouse = Double.MAX_VALUE;
         double cheapestProcessore = Double.MAX_VALUE;
         
         if(itemsOrdered == null) {
@@ -33,6 +35,12 @@ public class BillImpl implements Bill{
         
         
         for(EItem item: itemsOrdered) {
+            if(item.getItemType() == EItem.item.Mouse) {
+                countMouse = countMouse + 1;
+                if(item.getItemPrice() < cheapestMouse) {
+                    cheapestMouse = item.getItemPrice();
+                }
+            }
             if (item.getItemType() == EItem.item.Processor) {
                 countProcessori = countProcessori + 1;
                 if(item.getItemPrice() < cheapestProcessore) {
@@ -45,6 +53,9 @@ public class BillImpl implements Bill{
 
         if(countProcessori > 5){
             total = total - (cheapestProcessore / 2);
+        }
+        if(countMouse > 10) {
+            total = total - (cheapestMouse);
         }
         
         return total;

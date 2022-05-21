@@ -1,5 +1,6 @@
 ////////////////////////////////////////////////////////////////////
 // [Matteo] [Noro] [1229145]
+// [Giovanni] [Cocco] [1223856]
 ////////////////////////////////////////////////////////////////////
 
 package it.unipd.mtss.business;
@@ -106,6 +107,28 @@ public class BillTest {
         assertEquals(460, result, 0.0);
     }
 
+    @Test
+    public void testMoreThan10Mouse() throws BillException {
+    //Arrange
+        BillImpl newBill = new BillImpl();
+    	User user = new User("Matteo", "Oron", LocalDate.of(2009, 9, 2), "mo@gmail.com");
+    	List<EItem> itemsOrdered = new ArrayList<EItem>(); 
+        itemsOrdered.add(new EItem(EItem.item.Mouse, "MXmaster1", 60));
+        itemsOrdered.add(new EItem(EItem.item.Mouse, "MXmaster2", 78));
+        itemsOrdered.add(new EItem(EItem.item.Mouse, "MXmaster3", 62));
+        itemsOrdered.add(new EItem(EItem.item.Mouse, "MXmaster4", 59));
+        itemsOrdered.add(new EItem(EItem.item.Mouse, "MXmaster1S", 45));
+        itemsOrdered.add(new EItem(EItem.item.Mouse, "CorsairM1", 80));
+        itemsOrdered.add(new EItem(EItem.item.Mouse, "CorsairM2", 90));
+        itemsOrdered.add(new EItem(EItem.item.Mouse, "CorsairM3", 85));
+        itemsOrdered.add(new EItem(EItem.item.Mouse, "CorsairM4", 87));
+        itemsOrdered.add(new EItem(EItem.item.Mouse, "CorsairM4", 87));
+        itemsOrdered.add(new EItem(EItem.item.Mouse, "Logi1", 60));
+    //Act
+        double result = newBill.getOrderPrice(itemsOrdered, user, LocalTime.of(12, 30));
+    //Assert 793 - 45 = 748
+        assertEquals(748, result, 0.0);
+    }
         
 }
     
