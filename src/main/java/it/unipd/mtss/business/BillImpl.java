@@ -14,6 +14,12 @@ import it.unipd.mtss.business.exception.BillException;
 
 public class BillImpl implements Bill {
 
+    BillGiveawayImpl giveaway;
+    
+    public BillImpl() {
+        giveaway = new BillGiveawayImpl();
+    }
+
     public double getOrderPrice(List<EItem> itemsOrdered, User user, LocalTime orderTime)
             throws BillException {
         double total = 0.0D;
@@ -74,6 +80,10 @@ public class BillImpl implements Bill {
         }
         if(total < 10) {
             total = total + 2;
+        }
+
+        if(giveaway.giveAwayOrder(user, orderTime)) {
+            return 0;
         }
 
         return total;
