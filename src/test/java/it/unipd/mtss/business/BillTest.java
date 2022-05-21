@@ -6,10 +6,8 @@ package it.unipd.mtss.business;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Before;
 import org.junit.Test;
 import java.util.List;
-import java.io.Console;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -87,7 +85,26 @@ public class BillTest {
         }
     }
 
+    @Test
+    public void testMoreThan5Processori() throws BillException {
+    //Arrange
+        BillImpl newBill = new BillImpl();
+        User user = new User("Matteo", "Oron", LocalDate.of(2000, 9, 2), "mo@gmail.com");
+        List<EItem> itemsOrdered = new ArrayList<EItem>(); 
+        
+        itemsOrdered.add(new EItem(EItem.item.Keyboard, "myFirstMouse", 10));
+        itemsOrdered.add(new EItem(EItem.item.Processor, "corePentino", 40));
+        itemsOrdered.add(new EItem(EItem.item.Processor, "corePentino2", 80));
+        itemsOrdered.add(new EItem(EItem.item.Processor, "corePentino2s", 90));
+        itemsOrdered.add(new EItem(EItem.item.Processor, "coreiPentino3", 110));
+        itemsOrdered.add(new EItem(EItem.item.Processor, "coreiPentinoLight", 50));
+        itemsOrdered.add(new EItem(EItem.item.Processor, "corePentino6", 100));
     
+    //Act
+        double result = newBill.getOrderPrice(itemsOrdered, user, LocalTime.of(12, 30));
+    //Assert 480 - 40/2 = 460
+        assertEquals(460, result, 0.0);
+    }
 
         
 }

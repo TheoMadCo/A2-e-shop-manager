@@ -18,6 +18,8 @@ public class BillImpl implements Bill{
     public double getOrderPrice(List<EItem> itemsOrdered, User user, LocalTime orderTime) 
             throws BillException{
         double total = 0.0D;
+        int countProcessori = 0;
+        double cheapestProcessore = Double.MAX_VALUE;
         
         if(itemsOrdered == null) {
             throw new BillException("La lista itemsOrdered è uguale a null");
@@ -31,9 +33,22 @@ public class BillImpl implements Bill{
         
         
         for(EItem item: itemsOrdered) {
+            if (item.getItemType() == EItem.item.Processor) {
+                countProcessori = countProcessori + 1;
+                if(item.getItemPrice() < cheapestProcessore) {
+                    cheapestProcessore = item.getItemPrice();
+                }
+            }
+
             total = total + item.getItemPrice();
+        }
+
+        if(countProcessori > 5){
+            total = total - (cheapestProcessore / 2);
         }
         
         return total;
     }
 }
+
+
