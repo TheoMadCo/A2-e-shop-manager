@@ -129,6 +129,23 @@ public class BillTest {
     //Assert 793 - 45 = 748
         assertEquals(748, result, 0.0);
     }
+
+    @Test
+    public void testSameMouseAsKeyboard() throws BillException {
+    //Arrange
+        BillImpl newBill = new BillImpl();
+    	User user = new User("Matteo", "Oron", LocalDate.of(2009, 9, 2), "mo@gmail.com");
+    	List<EItem> itemsOrdered = new ArrayList<EItem>(); 
+        itemsOrdered.add(new EItem(EItem.item.Keyboard, "MXkeyboard", 105));
+        itemsOrdered.add(new EItem(EItem.item.Keyboard, "MXKeyboard2", 110));
+        itemsOrdered.add(new EItem(EItem.item.Mouse, "MXmaster1", 60));
+        itemsOrdered.add(new EItem(EItem.item.Mouse, "MXMaster2", 70));
+        itemsOrdered.add(new EItem(EItem.item.Processor, "corei7", 179));
+    //Act
+        double result = newBill.getOrderPrice(itemsOrdered, user, LocalTime.of(12, 30));
+    //Assert 105 + 110 + 60 + 70 + 179 - 60 = 464
+        assertEquals(464, result, 0.0);
+    }
         
 }
     
